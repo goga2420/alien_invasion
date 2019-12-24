@@ -3,7 +3,7 @@ from pygame.sprite import Group
 from ship import Ship
 
 
-class Scoreboard():
+class Scoreboard:
     def __init__(self, ai_settings, screen, stats):
         self.screen = screen
         self.screen_rect = screen.get_rect()
@@ -28,7 +28,8 @@ class Scoreboard():
     def prep_level(self):
         self.level_image = self.font.render(str(self.stats.level), True, self.text_color, self.ai_settings.bg_color)
         self.level_rect = self.level_image.get_rect()
-        self.level_rect.right = self.score_rect.bottom + 10
+        self.level_rect.right = self.score_rect.right
+        self.level_rect.top = self.score_rect.bottom + 10
 
     def prep_high_score(self):
         high_score = int(round(self.stats.high_score, -1))
