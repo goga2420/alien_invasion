@@ -5,7 +5,7 @@ from bullet import Bullet
 from alien import Alien
 
 
-def check_keydown_events(event, ai_settings, screen, ship, bullets):
+def check_keydown_events(event, ai_settings, screen, stats, sb, ship, aliens, bullets):
     if event.key == pygame.K_RIGHT:
         ship.moving_right = True
 
@@ -17,6 +17,10 @@ def check_keydown_events(event, ai_settings, screen, ship, bullets):
 
     elif event.key == pygame.K_q:
         sys.exit()
+
+    elif event.key == pygame.K_p:
+        start_game(ai_settings, screen, stats, sb, ship, aliens, bullets)
+
 
 
 def fire_bullet(ai_settings, screen, ship, bullets):
@@ -37,7 +41,7 @@ def check_events(ai_settings, screen, stats, sb, play_button, ship, aliens, bull
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            check_keydown_events(event, ai_settings, screen, ship, bullets)
+            check_keydown_events(event, ai_settings, screen, stats, sb, ship, aliens, bullets)
 
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, ship)
@@ -53,26 +57,31 @@ def check_high_score(stats, sb):
         sb.prep_high_score()
 
 
+
+
+
 def check_play_button(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets, mouse_x, mouse_y):
 
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
     if button_clicked and not stats.game_active:
-        ai_settings.initialize_dynamic_settings()
-        pygame.mouse.set_visible(False)
-        stats.reset_stats()
-        stats.game_active = True
+        start_game(ai_settings, screen, stats, sb, ship, aliens, bullets)
 
-        sb.prep_score()
-        sb.prep_high_score()
-        sb.prep_level()
-        sb.prep_ships()
+def start_game(ai_settings, screen, stats, sb, ship, aliens, bullets):
+    ai_settings.initialize_dynamic_settings()
+    pygame.mouse.set_visible(False)
+    stats.reset_stats()
+    stats.game_active = True
 
-        aliens.empty()
-        bullets.empty()
+    sb.prep_score()
+    sb.prep_high_score()
+    sb.prep_level()
+    sb.prep_ships()
 
-        create_fleet(ai_settings, screen, ship, aliens)
-        ship.center_ship()
+    aliens.empty()
+    bullets.empty()
 
+    create_fleet(ai_settings, screen, ship, aliens)
+    ship.center_ship()
 
 def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets):
     bullets.update()
