@@ -16,6 +16,12 @@ class Settings:
         self.fleet_drop_speed = 10
         self.speedup_scale = 1.1
         self.score_scale = 1.5
+
+        self.aliens_bullets_speed_factor = 3
+        self.aliens_bullets_width = 3
+        self.aliens_bullets_height = 15
+        self.aliens_bullets_color = 60, 60, 60
+
         self.initialize_dynamic_settings()
 
     def initialize_dynamic_settings(self):
